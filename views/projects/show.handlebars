@@ -55,15 +55,24 @@
         socket.emit('newTask', newTask);
       });
       socket.on('taskUpdate', task => {
+        console.log(task);
         let htmlVar = $('#tasktable').html();
         let newHtml = htmlVar.substring(0, htmlVar.length - 9);
         newHtml += `<tr><td>${task.name}</td><td>`;
         task.users.forEach(user => {
-          newHtml += `<span class='label label-primary'> ${user.username} </span>`;
+          newHtml += `<span class='label label-primary'>${user.username}</span>`;
         });
 
-        newHtml += `</td><td><span id='${task.id}' class='label label-success'>Click to volunteer!</span></td></tr></tbody> `;
+        newHtml += `</td><td><span id='${task._id}' class='label label-success'>Click to volunteer!</span> </td></tr></tbody> `;
         $('#tasktable').html(newHtml);
+        $(`#${task._id}`).click(() => {
+          let volunteer = {
+            userId: '{{user.id}}',
+            taskId: $('.label.label-success')[$('.label.label-success').length - 1].id
+          }
+          socket.emit('volunteer', volunteer);
+        });
+
       });
     });
     for (let i = 0; i < $('.label.label-success').length; i++) {
@@ -78,7 +87,7 @@
     socket.on('newVolunteer', newVolunteer => {
       console.log(newVolunteer);
       let htmlStore = $(`#${newVolunteer.taskId}`).parent().parent().eq(0).children().eq(1).html();
-      htmlStore += `<span class="label label-primary">${newVolunteer.user.username}</span>`;
+      htmlStore += `         \n<span class="label label-primary">${newVolunteer.user.username}</span>`;
       $(`#${newVolunteer.taskId}`).parent().parent().eq(0).children().eq(1).html(htmlStore);
 
     });
