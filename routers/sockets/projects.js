@@ -64,7 +64,8 @@ module.exports = io => {
           taskId: task.id,
           user: user
         }
-        projectsIo.in(project.id).emit('newVolunteer', user)
+        console.log(newVolunteer);
+        projectsIo.in(`${project.id}`).emit('newVolunteer', newVolunteer)
       }
 
 

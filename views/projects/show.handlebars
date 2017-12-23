@@ -21,7 +21,7 @@
         <span class='label label-primary'>{{ user.username }}</span> {{/each}}
       </td>
       <td>
-        <span id={ {task.id}} class='label label-success'>Click to volunteer!</span>
+        <span id='{{task.id}}' class='label label-success'>Click to volunteer!</span>
       </td>
     </tr>
     {{/each}}
@@ -76,6 +76,7 @@
       });
     }
     socket.on('newVolunteer', newVolunteer => {
+      console.log(newVolunteer);
       let htmlStore = $(`#${newVolunteer.taskId}`).parent().parent().eq(0).children().eq(1).html();
       htmlStore += `<span class="label label-primary">${newVolunteer.user.username}</span>`;
       $(`#${newVolunteer.taskId}`).parent().parent().eq(0).children().eq(1).html(htmlStore);
