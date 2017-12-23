@@ -1,0 +1,85 @@
+<header class="page-header">
+  <h1>Project: {{ project.name }}</h1>
+  <a href="/projects/{{ project.id }}/edit" class="btn btn-primary">Edit</a>
+  <a href="/projects/{{ project.id }}?_method=delete" class="btn btn-danger">Delete</a>
+</header>
+
+
+<table id='tasktable' class="table">
+  <thead>
+    <tr>
+      <th>Task</th>
+      <th>Users</th>
+    </tr>
+  </thead>
+  <tbody>
+    {{#each project.tasks as |task|}}
+    <tr>
+      <td>{{ task.name }}</td>
+      <td>
+        {{#each task.users as |user|}}
+        <span class='label label-primary'>{{ user.username }}</span> {{/each}}
+      </td>
+      <td>
+        <span id={ {task.id}} class='label label-success'>Click to volunteer!</span>
+      </td>
+    </tr>
+    {{/each}}
+  </tbody>
+</table>
+<div class='container'>
+  <div class='panel panel-primary'>
+    <div class='panel-heading'>
+      <h4>Add a task?</h4>
+    </div>
+    <div class='panel-body'>
+      <input class='form-control' type='text' id='taskname' name='taskname'>
+      <input type="checkbox" name="include" id='include' checked="checked">I will be working on this.<br>
+      <br>
+      <span class='btn btn-primary' id="tasksubmit">Add Task</span>
+    </div>
+  </div>
+</div>
+<script>
+  const socket = io.connect('http://localhost:3000/projects');
+  socket.on('success', message => {
+    socket.emit('room', '{{project.id}}');
+    socket.on('roomSuccess', room => {
+      $('#tasksubmit').click(() => {
+        var newTask = {
+          name: $('#taskname')[0].value,
+          userId: '{{user.id}}',
+          includeUser: $('#include').prop('checked'),
+          projectId: '{{project.id}}'
+        }
+        socket.emit('newTask', newTask);
+      });
+      socket.on('taskUpdate', task => {
+        let htmlVar = $('#tasktable').html();
+        let newHtml = htmlVar.substring(0, htmlVar.length - 9);
+        newHtml += `<tr><td>${task.name}</td><td>`;
+        task.users.forEach(user => {
+          newHtml += `<span class='label label-primary'> ${user.username} </span>`;
+        });
+
+        newHtml += `</td><td><span id='${task.id}' class='label label-success'>Click to volunteer!</span></td></tr></tbody> `;
+        $('#tasktable').html(newHtml);
+      });
+    });
+    for (let i = 0; i < $('.label.label-success').length; i++) {
+      $('.label.label-success').eq(i).click(() => {
+        let volunteer = {
+          userId: '{{user.id}}',
+          taskId: $('.label.label-success')[i].id
+        }
+        socket.emit('volunteer', volunteer);
+      });
+    }
+    socket.on('newVolunteer', newVolunteer => {
+      let htmlStore = $(`#${newVolunteer.taskId}`).parent().parent().eq(0).children().eq(1).html();
+      htmlStore += `<span class="label label-primary">${newVolunteer.user.username}</span>`;
+      $(`#${newVolunteer.taskId}`).parent().parent().eq(0).children().eq(1).html(htmlStore);
+
+    });
+  });
+</script>

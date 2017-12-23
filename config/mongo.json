@@ -1,0 +1,13 @@
+{
+  "development": {
+    "database": "nov_hackaton_studious_chainsaw_development",
+    "host": "localhost"
+  },
+  "test": {
+    "database": "nov_hackaton_studious_chainsaw_test",
+    "host": "localhost"
+  },
+  "production": {
+    "use_env_variable": "MONGODB_URI"
+  }
+}
