@@ -1,5 +1,11 @@
 <header class="page-header">
-  <h1>Project: {{ project.name }}</h1>
+  <div class='jumbotron'>
+    <h1 class='display-4'>{{ project.name }}</h1>
+    <p class='lead'>{{project.description}}</p>
+    <hr>
+    <p class='lead'>The project deadline is in:</p>
+    <h1 class='display-4' id='countdownClock'></h1>
+  </div>
   <a href="/projects/{{ project.id }}/edit" class="btn btn-primary">Edit</a>
   <a href="/projects/{{ project.id }}?_method=delete" class="btn btn-danger">Delete</a>
 </header>
@@ -9,19 +15,21 @@
   <thead>
     <tr>
       <th>Task</th>
-      <th>Users</th>
+      <th>Deadline</th>
+      <th>Volunteers</th>
     </tr>
   </thead>
   <tbody>
     {{#each project.tasks as |task|}}
     <tr>
       <td>{{ task.name }}</td>
+      <td>{{task.deadline}}</td>
       <td>
         {{#each task.users as |user|}}
         <span class='label label-primary'>{{ user.username }}</span> {{/each}}
       </td>
-      <td>
-        <span id='{{task.id}}' class='label label-success'>Click to volunteer!</span>
+      <td class='col-md-2'>
+        <span id='{{task.id}}' class='label label-success clickable'>Click to volunteer!</span>
       </td>
     </tr>
     {{/each}}
@@ -33,7 +41,12 @@
       <h4>Add a task?</h4>
     </div>
     <div class='panel-body'>
+      <label for='taskname'>Task Name</label>
       <input class='form-control' type='text' id='taskname' name='taskname'>
+      <label for='taskdesc'>Task Description</label>
+      <textarea rows='5' class='form-control' type='text' id='taskdesc' name='taskdesc'></textarea>
+      <label for='taskdead'>Task Deadline</label>
+      <input type='date' class='form-control' id='taskdead' name='taskdead'>
       <input type="checkbox" name="include" id='include' checked="checked">I will be working on this.<br>
       <br>
       <span class='btn btn-primary' id="tasksubmit">Add Task</span>
@@ -41,29 +54,62 @@
   </div>
 </div>
 <script>
+  const deadline = new Date('{{ project.deadline }}');
+  let countdownTimer = setInterval(() => {
+    let now = new Date();
+    let distance = deadline - now;
+    let days = Math.floor(distance / (1000 * 60 * 60 * 24));
+    let hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+    var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+    document.getElementById("countdownClock").innerHTML = days + "d " + hours + "h " + minutes + "m " + seconds + "s ";
+    if (distance < 0) {
+      clearInterval(countdownTimer);
+      document.getElementById("countdownClock").innerHTML = "The deadline has passed.";
+    }
+  }, 1000);
   const socket = io.connect('http://localhost:3000/projects');
   socket.on('success', message => {
     socket.emit('room', '{{project.id}}');
     socket.on('roomSuccess', room => {
       $('#tasksubmit').click(() => {
-        var newTask = {
-          name: $('#taskname')[0].value,
-          userId: '{{user.id}}',
-          includeUser: $('#include').prop('checked'),
-          projectId: '{{project.id}}'
+        if ($('#taskname')[0].value === '') {
+          alert("Please input a name for this task.");
+          $('#taskname')[0].style.borderColor = 'red';
+        } else if ($('#taskdesc')[0].value === '') {
+          alert("Please input a description for this task.");
+          $('#taskdesc')[0].style.borderColor = 'red';
+        } else if ($('#taskdead')[0].value === '') {
+          alert("Please input a deadline for this task.");
+          $('#taskdead')[0].style.borderColor = 'red';
+        } else {
+          var newTask = {
+            name: $('#taskname')[0].value,
+            description: $('#taskdesc')[0].value,
+            deadline: $('#taskdead')[0].value,
+            userId: '{{user.id}}',
+            includeUser: $('#include').prop('checked'),
+            projectId: '{{project.id}}'
+          }
+          $('#taskname')[0].value = '';
+          $('#taskname')[0].style.borderColor = '';
+          $('#taskdesc')[0].value = '';
+          $('#taskdesc')[0].style.borderColor = '';
+          $('#taskdead')[0].value = '';
+          $('#taskdead')[0].style.borderColor = '';
+          socket.emit('newTask', newTask);
         }
-        socket.emit('newTask', newTask);
       });
       socket.on('taskUpdate', task => {
         console.log(task);
         let htmlVar = $('#tasktable').html();
         let newHtml = htmlVar.substring(0, htmlVar.length - 9);
-        newHtml += `<tr><td>${task.name}</td><td>`;
+        newHtml += `<tr><td>${task.name}</td><td>${task.deadline}</td><td>`;
         task.users.forEach(user => {
           newHtml += `<span class='label label-primary'>${user.username}</span>`;
         });
 
-        newHtml += `</td><td><span id='${task._id}' class='label label-success'>Click to volunteer!</span> </td></tr></tbody> `;
+        newHtml += `</td><td class='col-md-2'><span id='${task._id}' class='label label-success clickable'>Click to volunteer!</span> </td></tr></tbody> `;
         $('#tasktable').html(newHtml);
         $(`#${task._id}`).click(() => {
           let volunteer = {
@@ -86,9 +132,9 @@
     }
     socket.on('newVolunteer', newVolunteer => {
       console.log(newVolunteer);
-      let htmlStore = $(`#${newVolunteer.taskId}`).parent().parent().eq(0).children().eq(1).html();
-      htmlStore += `         \n<span class="label label-primary">${newVolunteer.user.username}</span>`;
-      $(`#${newVolunteer.taskId}`).parent().parent().eq(0).children().eq(1).html(htmlStore);
+      let htmlStore = $(`#${newVolunteer.taskId}`).parent().parent().eq(0).children().eq(2).html();
+      htmlStore += `\n<span class="label label-primary">${newVolunteer.user.username}</span>`;
+      $(`#${newVolunteer.taskId}`).parent().parent().eq(0).children().eq(2).html(htmlStore);
 
     });
   });

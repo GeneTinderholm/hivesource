@@ -6,6 +6,8 @@ const Schema = mongoose.Schema;
 const UserSchema = Schema({
   username: { type: String, required: true, unique: true },
   passwordHash: { type: String, required: true },
+  projects: [{ type: Schema.Types.ObjectId, ref: 'Project' }],
+  tasks: [{ type: Schema.Types.ObjectId, ref: 'Task' }],
   date: { type: Date, default: Date.now },
 });
 

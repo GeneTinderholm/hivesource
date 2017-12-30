@@ -4,6 +4,8 @@ const Schema = mongoose.Schema;
 
 const ProjectSchema = Schema({
   name: { type: String, required: true, unique: true },
+  description: { type: String, required: true },
+  deadline: { type: String },
   date: { type: Date, default: Date.now },
   users: [{ type: Schema.Types.ObjectId, ref: 'User' }],
   tasks: [{ type: Schema.Types.ObjectId, ref: 'Task' }]

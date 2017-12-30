@@ -1,0 +1,4 @@
+{"_id":{"$oid":"5a3d32ac65a7f617d55ce251"},"username":"gene","passwordHash":"$2a$08$QOGzQNx20HTKsx8ruXoUMejjOHZov9Wa.JRapawkbDjsFYVhhp5Le","date":{"$date":"2017-12-22T16:28:28.307Z"},"__v":0}
+{"_id":{"$oid":"5a3d97bdbe346151d4849462"},"username":"Steve","passwordHash":"$2a$08$bY1KELD4mPlgfn4Zr5P.BOXjclGyKVVEg/xMqEO25IrvjGtW9QxCG","date":{"$date":"2017-12-22T23:39:41.522Z"},"__v":0}
+{"_id":{"$oid":"5a3d9db63857e658c84d4efd"},"username":"carol","passwordHash":"$2a$08$JtErOE1V7Dao1ITqNT1PJe1JoAHKQ/a8nGV7DckfN0efwaTEACp92","date":{"$date":"2017-12-23T00:05:10.885Z"},"__v":0}
+{"_id":{"$oid":"5a3da9477a817d5f744d8b14"},"username":"steven","passwordHash":"$2a$08$YpXM.G.Qh0QF7dMhTRWKvOTyvFe6LNRvVdvmHk42PmAwnAcbV6hQ2","date":{"$date":"2017-12-23T00:54:31.910Z"},"__v":0}
