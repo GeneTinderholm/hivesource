@@ -87,3 +87,14 @@ body {
   background-color: #fff !important;
   color:#002b36 !important;
 }
+
+.project-panel {
+  border-style: solid;
+  border-width: 2px; 
+  border-color: #586e75;
+}
+
+.project-panel-head {
+  background-color: #268bd2;
+  color: #fff;
+}
