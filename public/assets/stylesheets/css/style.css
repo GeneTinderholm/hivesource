@@ -19,6 +19,7 @@ body {
 
 .solarized-blue:hover{
   background-color:#0058A0;
+  color: #fff;
 }
 
 .solarized-red {
@@ -28,6 +29,7 @@ body {
 
 .solarized-red:hover{
   background-color:#A90000;
+  color: #fff;
 }
 
 .solarized-cyan {
