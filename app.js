@@ -207,24 +207,24 @@ const port = process.env.PORT ||
   3000;
 const host = 'localhost';
 
-// let args;
-// process.env.NODE_ENV === 'production' ?
-//   args = [port] :
-//   args = [port, host];
-//
-// args.push(() => {
-//   console.log(`Listening: http://${ host }:${ port }\n`);
-// });
-// server.listen(port);
+let args;
+process.env.NODE_ENV === 'production' ?
+  args = [port] :
+  args = [port, host];
 
-// if (require.main === module) {
-//   app.listen.apply(app, args);
-// }
-if (require.main === module) {
-  server.listen(port,() => {
+args.push(() => {
   console.log(`Listening: http://${ host }:${ port }\n`);
 });
+server.listen(port);
+
+if (require.main === module) {
+  app.listen.apply(app, args);
 }
+// if (require.main === module) {
+//   server.listen(port,() => {
+//   console.log(`Listening: http://${ host }:${ port }\n`);
+// });
+// }
 // ----------------------------------------
 // Error Handling
 // ----------------------------------------
