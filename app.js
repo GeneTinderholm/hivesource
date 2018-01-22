@@ -1,13 +1,13 @@
 const express = require('express');
 const app = express();
 var server = require('http').createServer(app);
-console.log(process.env);
 
 
 // ----------------------------------------
 // App Variables
 // ----------------------------------------
 app.locals.appName = 'Hive-Source';
+app.locals.hostName = process.env.HOST_NAME || 'localhost:3000';
 
 
 //----------------------------------------
