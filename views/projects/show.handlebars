@@ -120,7 +120,7 @@ const socket = io.connect('{{hostName}}/projects');
           newHtml += `<span class='label project-panel-head'>${user.username}</span>`;
         });
 
-        newHtml += `</td><td class='col-md-2'><span id='${task._id}' class='label label-success clickable'>Click to volunteer!</span> </td></tr></tbody> `;
+        newHtml += `</td><td class='col-md-2'><span id='${task._id}' class='label label-success clickable volunteer-badge'>Click to volunteer!</span> </td></tr></tbody> `;
         $('#tasktable').html(newHtml);
         $(`#${task._id}`).click(() => {
           let volunteer = {
