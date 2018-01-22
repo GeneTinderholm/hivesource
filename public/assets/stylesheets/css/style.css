@@ -21,6 +21,15 @@ body {
   background-color:#0058A0;
 }
 
+.solarized-red {
+  background-color: #dc322f;
+  color: #fff;
+}
+
+.solarized-red:hover{
+  background-color:#A90000;
+}
+
 .solarized-cyan {
   background-color: #2aa198;
   color: #fff;

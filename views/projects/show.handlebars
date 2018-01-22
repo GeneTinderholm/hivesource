@@ -6,8 +6,8 @@
     <p class='lead'>The project deadline is in:</p>
     <h1 class='display-4' id='countdownClock'></h1>
   </div>
-  <a href="/projects/{{ project.id }}/edit" class="btn btn-primary">Edit</a>
-  <a href="/projects/{{ project.id }}?_method=delete" class="btn btn-danger">Delete</a>
+  <a href="/projects/{{ project.id }}/edit" class="btn solarized-blue">Edit</a>
+  <a href="/projects/{{ project.id }}?_method=delete" class="btn solarized-red">Delete</a>
 </header>
 
 
@@ -36,7 +36,7 @@
   </tbody>
 </table>
 <div class='container'>
-  <div class='panel panel-primary'>
+  <div class='panel solarized-blue'>
     <div class='panel-heading'>
       <h4>Add a task?</h4>
     </div>
@@ -49,7 +49,7 @@
       <input type='date' class='form-control' id='taskdead' name='taskdead'>
       <input type="checkbox" name="include" id='include' checked="checked">I will be working on this.<br>
       <br>
-      <span class='btn btn-primary' id="tasksubmit">Add Task</span>
+      <span class='btn solarized-blue' id="tasksubmit">Add Task</span>
     </div>
   </div>
 </div>
