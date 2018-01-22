@@ -1,9 +1,21 @@
-<div class='container'>
-  <div class='row'>
-    {{#each projects as |project|}}
-      <div class="col-md-3">
-        <a href="/projects/{{project.id}}">{{project.name}}</a>
+<div class='row'>
+  {{#each projects as |project|}}
+  <div class="col-sm-4 centered">
+    <a href="/projects/{{project.id}}" class="display-link">
+      <div class="panel solarized-blue">
+        <div class="panel-header">
+          <h4>{{project.name}}</h4>
+        </div>
+        <div class="panel-body">
+          <p>
+            Deadline: {{project.deadline}}
+          </p>
+          <p>
+            {{project.description}}
+          </p>
+        </div>
       </div>
-    {{/each}}
+    </a>
   </div>
+  {{/each}}
 </div>

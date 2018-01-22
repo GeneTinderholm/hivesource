@@ -6,7 +6,7 @@ var server = require('http').createServer(app);
 // ----------------------------------------
 // App Variables
 // ----------------------------------------
-app.locals.appName = 'Hackathon Project';
+app.locals.appName = 'Hive-Source';
 
 
 //----------------------------------------
