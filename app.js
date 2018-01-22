@@ -1,6 +1,7 @@
 const express = require('express');
 const app = express();
 var server = require('http').createServer(app);
+console.log(process.env);
 
 
 // ----------------------------------------
