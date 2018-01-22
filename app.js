@@ -177,12 +177,16 @@ const login = require('./routers/login');
 const logout = require('./routers/logout');
 const signup = require('./routers/signup');
 const projects = require('./routers/projects');
+const tasks = require('./routers/tasks');
+const users = require('./routers/users');
 
 app.use('/', index);
 app.use('/login', login);
 app.use('/logout', logout);
 app.use('/signup', signup);
 app.use('/projects', projects);
+app.use('/tasks', tasks);
+app.use('/users', users);
 
 // ----------------------------------------
 // Template Engine

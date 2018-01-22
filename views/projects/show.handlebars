@@ -1,3 +1,4 @@
+<div class='container'>
 <header class="page-header">
   <div class='jumbotron'>
     <h1 class='display-4'>{{ project.name }}</h1>
@@ -11,7 +12,7 @@
 </header>
 
 
-<table id='tasktable' class="table">
+<table id='tasktable' class="table table-striped">
   <thead>
     <tr>
       <th>Task</th>
@@ -22,20 +23,19 @@
   <tbody>
     {{#each project.tasks as |task|}}
     <tr>
-      <td>{{ task.name }}</td>
+      <td><a href="/tasks/{{task.id}}">{{ task.name }}</a></td>
       <td>{{task.deadline}}</td>
       <td>
         {{#each task.users as |user|}}
-        <span class='label label-primary'>{{ user.username }}</span> {{/each}}
+        <span class='label project-panel-head'>{{ user.username }}</span> {{/each}}
       </td>
       <td class='col-md-2'>
-        <span id='{{task.id}}' class='label label-success clickable'>Click to volunteer!</span>
+        <span id='{{task.id}}' class='label label-success clickable volunteer-badge'>Click to volunteer!</span>
       </td>
     </tr>
     {{/each}}
   </tbody>
 </table>
-<div class='container'>
   <div class='panel project-panel'>
     <div class='panel-heading project-panel-head'>
       <h4>Add a task?</h4>
@@ -106,7 +106,7 @@ const socket = io.connect('{{hostName}}/projects');
         let newHtml = htmlVar.substring(0, htmlVar.length - 9);
         newHtml += `<tr><td>${task.name}</td><td>${task.deadline}</td><td>`;
         task.users.forEach(user => {
-          newHtml += `<span class='label label-primary'>${user.username}</span>`;
+          newHtml += `<span class='label project-panel-head'>${user.username}</span>`;
         });
 
         newHtml += `</td><td class='col-md-2'><span id='${task._id}' class='label label-success clickable'>Click to volunteer!</span> </td></tr></tbody> `;
@@ -133,7 +133,7 @@ const socket = io.connect('{{hostName}}/projects');
     socket.on('newVolunteer', newVolunteer => {
       console.log(newVolunteer);
       let htmlStore = $(`#${newVolunteer.taskId}`).parent().parent().eq(0).children().eq(2).html();
-      htmlStore += `\n<span class="label label-primary">${newVolunteer.user.username}</span>`;
+      htmlStore += `\n<span class="label project-panel-head">${newVolunteer.user.username}</span>`;
       $(`#${newVolunteer.taskId}`).parent().parent().eq(0).children().eq(2).html(htmlStore);
 
     });
