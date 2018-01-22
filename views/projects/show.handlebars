@@ -68,7 +68,7 @@
       document.getElementById("countdownClock").innerHTML = "The deadline has passed.";
     }
   }, 1000);
-  const socket = io.connect('http://localhost:3000/projects');
+  const socket = io.connect('http://arcane-woodland-86124.herokuapp.com/projects');
   socket.on('success', message => {
     socket.emit('room', '{{project.id}}');
     socket.on('roomSuccess', room => {
