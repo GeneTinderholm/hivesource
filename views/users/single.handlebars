@@ -1,0 +1,57 @@
+<div class="container">
+  <div class="row">
+    <div class="col-sm-6 col-sm-offset-3">
+      <div class="panel project-panel project-panel-head centered">
+        <div class="panel-heading">
+          <h2>
+            {{user.username}}
+          </h2>
+          <p>
+            Member since: {{user.date}}
+          </p>
+        </div>
+        <div class="panel-body">
+          <img src='/images/viking.png' alt='profile-pic'>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div>
+    <h4>{{user.username}}'s Projects</h4>
+  </div>
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>Project Name</th>
+        <th>Deadline</th>
+      </tr>
+    </thead>
+    <tbody>
+      {{#each user.projects as |project|}}
+      <tr>
+        <td><a href="/projects/{{project.id}}">{{project.name}}</a></td>
+        <td>{{project.deadline}}</td>
+      </tr>
+      {{/each}}
+    </tbody>
+  </table>
+  <div>
+    <h4>{{user.username}}'s Tasks</h4>
+  </div>
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>Task Name</th>
+        <th>Deadline</th>
+      </tr>
+    </thead>
+    <tbody>
+      {{#each user.tasks as |task|}}
+      <tr>
+        <td><a href="/tasks/{{task.id}}">{{task.name}}</a></td>
+        <td>{{task.deadline}}</td>
+      </tr>
+      {{/each}}
+    </tbody>
+  </table>
+</div>
