@@ -26,4 +26,44 @@ Note: If you do not yet have an account click the "or sign up" button at the bot
 
 7. You should be greeted with the following page:
 
+![Main](https://github.com/GeneTinderholm/nov-hackaton-studious-chainsaw/blob/master/images/main.png?raw=true)
 
+On top is a greeting. Below that is a list of projects you have volunteered for. Below that is a link to the list of all projects.
+
+Click the link to see the list of all projects and you should end up on a page that looks like: 
+
+![All Projects](https://github.com/GeneTinderholm/nov-hackaton-studious-chainsaw/blob/master/images/allProjects.png?raw=true)
+
+If there are no projects, clicking the menu in the top right and clicking the "New Project" link will bring you to a page to create a new one.
+
+The link for viewing an individual project should look something like:
+
+![Single Project](https://github.com/GeneTinderholm/nov-hackaton-studious-chainsaw/blob/master/images/singleProject.png?raw=true)
+
+On top is the name and description of the project. Below this is a countdown that tells you how far away the project deadline is.
+
+Below this is a table with all of the projects tasks, the deadlines of each of those tasks, and the names of those who are volunteering for each task.
+
+Clicking the green "Click to Volunteer" button should add your name to the list of volunteers.
+
+Clicking the blue "Add a Task" button should reveal a panel where you can add a new task. It should look something like this:
+
+![Add Task](https://github.com/GeneTinderholm/nov-hackaton-studious-chainsaw/blob/master/images/addTask.png?raw=true)
+
+Completing this form should add a new task to the table on the project.
+
+Clicking any task name will bring you to the display page for the task. On top is the name and description of the task and below that is a separate countdown for this task.
+
+Below that is a table of users who have volunteered for the task.
+
+The page should look something like: 
+
+![Task](https://github.com/GeneTinderholm/nov-hackaton-studious-chainsaw/blob/master/images/task.png?raw=true)
+
+Clicking a username will bring you to the profile page for the user. It should look something like: 
+
+![User Profile](https://github.com/GeneTinderholm/nov-hackaton-studious-chainsaw/blob/master/images/user.png?raw=true)
+
+The top panel contains the user's username, the date on which they became a member and a profile picture. 
+
+Below this is a list of projects they have volunteered for. Below that is a similar list of tasks.
